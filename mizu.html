@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mizu — a beginner's watercolour practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F3EC;
+    --paper-2:#EEE9DA;
+    --panel:#FCFAF4;
+    --ink:#2B3648;
+    --ink-soft:#5B6472;
+    --ink-faint:#8A8F80;
+    --prussian:#3C6E91;
+    --prussian-dark:#24475F;
+    --prussian-tint:#DCE9F0;
+    --sienna:#BF7A3E;
+    --sienna-dark:#8C5726;
+    --sienna-tint:#F3E4D2;
+    --rose:#B85C6B;
+    --rose-dark:#7E3E48;
+    --rose-tint:#F3DEE1;
+    --sage:#79886C;
+    --sage-dark:#4F5C44;
+    --sage-tint:#E4E9DC;
+    --line:rgba(43,54,72,0.14);
+    --line-strong:rgba(43,54,72,0.26);
+    --shadow:0 1px 2px rgba(43,54,72,0.06);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-weight:400;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{font-family:'Fraunces', serif;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:var(--prussian-dark);}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky;top:0;z-index:20;
+    background:rgba(246,243,236,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:0.5px solid var(--line);
+  }
+  nav .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-top:14px;padding-bottom:14px;
+  }
+  .wordmark{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:22px;
+    letter-spacing:0.01em;
+    color:var(--ink);
+    text-decoration:none;
+  }
+  .wordmark span{color:var(--prussian);}
+  nav .nav-links{display:flex;gap:22px;align-items:center;}
+  nav .nav-links a{
+    font-size:13.5px;color:var(--ink-soft);text-decoration:none;
+    letter-spacing:0.01em;
+  }
+  nav .nav-links a:hover{color:var(--ink);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:96px 0 84px;
+    background:var(--paper);
+  }
+  .bloom{position:absolute;border-radius:50%;filter:blur(0px);mix-blend-mode:multiply;opacity:0.55;}
+  .hero .bloom-a{width:520px;height:480px;background:radial-gradient(circle at 40% 40%, var(--prussian) 0%, transparent 68%);top:-220px;left:-160px;opacity:0.28;}
+  .hero .bloom-b{width:420px;height:420px;background:radial-gradient(circle at 60% 40%, var(--sienna) 0%, transparent 70%);top:-80px;right:-140px;opacity:0.22;}
+  .hero .bloom-c{width:360px;height:320px;background:radial-gradient(circle at 50% 50%, var(--rose) 0%, transparent 72%);bottom:-180px;left:38%;opacity:0.18;}
+  .hero-inner{position:relative;z-index:2;}
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--prussian-dark);
+    margin:0 0 18px;
+  }
+  h1.title{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(52px, 9vw, 92px);
+    line-height:0.98;
+    margin:0 0 22px;
+    color:var(--ink);
+  }
+  .lede{
+    font-size:18px;
+    color:var(--ink-soft);
+    max-width:520px;
+    margin:0 0 30px;
+  }
+  .hero-meta{
+    display:flex;gap:28px;flex-wrap:wrap;
+    font-size:13.5px;color:var(--ink-soft);
+  }
+  .hero-meta strong{color:var(--ink);font-weight:500;}
+
+  /* ---------- section shared ---------- */
+  section{padding:64px 0;}
+  h2.section-title{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:28px;
+    margin:0 0 8px;
+    color:var(--ink);
+  }
+  .section-sub{color:var(--ink-soft);font-size:15px;margin:0 0 40px;max-width:560px;}
+
+  /* ---------- how it works ---------- */
+  .how{border-top:0.5px solid var(--line);}
+  .how-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:28px;
+  }
+  .how-item{padding-top:2px;}
+  .how-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;color:var(--ink-faint);margin-bottom:10px;
+  }
+  .how-item h3{
+    font-family:'Fraunces', serif;font-weight:500;font-size:18px;
+    margin:0 0 8px;color:var(--ink);
+  }
+  .how-item p{font-size:14.5px;color:var(--ink-soft);margin:0;}
+
+  /* ---------- palette ---------- */
+  .palette{background:var(--panel);border-top:0.5px solid var(--line);border-bottom:0.5px solid var(--line);}
+  .swatches{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
+    background:var(--line);
+    border:0.5px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+    margin-top:8px;
+  }
+  .swatch{background:var(--panel);padding:20px 16px;}
+  .swatch-chip{width:34px;height:34px;border-radius:50%;margin-bottom:14px;}
+  .swatch h4{font-size:13.5px;font-weight:500;margin:0 0 4px;color:var(--ink);}
+  .swatch p{font-size:12px;color:var(--ink-faint);margin:0;font-family:'JetBrains Mono', monospace;}
+
+  /* ---------- timeline ---------- */
+  .plan{border-top:0.5px solid var(--line);}
+  .timeline{position:relative;}
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:29px;top:8px;bottom:8px;
+    width:2px;
+    background:linear-gradient(to bottom, var(--prussian) 0%, var(--sienna) 45%, var(--rose) 75%, var(--rose) 100%);
+    opacity:0.35;
+    border-radius:2px;
+  }
+  .week{
+    position:relative;
+    display:grid;
+    grid-template-columns:60px 1fr;
+    gap:22px;
+    padding-bottom:56px;
+  }
+  .week:last-child{padding-bottom:0;}
+  .blob{
+    width:60px;height:56px;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:46% 54% 58% 42% / 44% 40% 60% 56%;
+    color:var(--panel);
+    font-family:'Fraunces', serif;font-weight:500;font-size:19px;
+    position:relative;z-index:2;
+    box-shadow:var(--shadow);
+  }
+  .blob.c-sage{background:var(--sage-dark);}
+  .blob.c-prussian{background:var(--prussian-dark);}
+  .blob.c-sienna{background:var(--sienna-dark);}
+  .blob.c-rose{background:var(--rose-dark);}
+  .blob.c-ink{background:var(--ink);}
+  .blob.c-final{background:linear-gradient(135deg, var(--sienna-dark) 0%, var(--rose-dark) 100%);}
+
+  .week-card{
+    background:var(--panel);
+    border:0.5px solid var(--line);
+    border-radius:12px;
+    padding:26px 28px 28px;
+  }
+  .week-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;letter-spacing:0.06em;text-transform:uppercase;
+    margin:0 0 6px;
+  }
+  .week-eyebrow.t-sage{color:var(--sage-dark);}
+  .week-eyebrow.t-prussian{color:var(--prussian-dark);}
+  .week-eyebrow.t-sienna{color:var(--sienna-dark);}
+  .week-eyebrow.t-rose{color:var(--rose-dark);}
+  .week-eyebrow.t-ink{color:var(--ink-soft);}
+
+  .week-card h3{
+    font-family:'Fraunces', serif;font-weight:500;font-size:22px;
+    margin:0 0 12px;color:var(--ink);
+  }
+  .week-card p.desc{font-size:15px;color:var(--ink-soft);margin:0 0 18px;max-width:560px;}
+
+  .practice{
+    background:var(--paper-2);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:20px;
+  }
+  .practice .label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--ink-faint);margin:0 0 6px;
+  }
+  .practice p{margin:0;font-size:14px;color:var(--ink);}
+
+  .video-frame{
+    position:relative;width:100%;padding-top:56.25%;
+    border-radius:10px;overflow:hidden;
+    background:var(--ink);
+    border:0.5px solid var(--line);
+    margin-bottom:10px;
+    cursor:pointer;
+  }
+  .video-frame iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+  .video-thumb{
+    position:absolute;top:0;left:0;width:100%;height:100%;
+    background-size:cover;background-position:center;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .video-thumb::after{
+    content:"";position:absolute;inset:0;
+    background:rgba(20,24,32,0.22);
+  }
+  .video-play{
+    position:relative;z-index:2;
+    width:60px;height:60px;border-radius:50%;
+    background:rgba(20,24,32,0.72);
+    display:flex;align-items:center;justify-content:center;
+    transition:background 0.15s ease, transform 0.15s ease;
+  }
+  .video-frame:hover .video-play{background:var(--rose-dark);transform:scale(1.06);}
+  .video-play svg{width:20px;height:20px;margin-left:3px;}
+  .video-frame.playing{cursor:default;}
+  .video-frame.playing .video-thumb{display:none;}
+  .video-credit{font-size:12.5px;color:var(--ink-faint);margin:0;}
+  .video-credit a{color:var(--ink-soft);text-decoration:underline;}
+
+  /* ---------- references ---------- */
+  .refs{margin-bottom:22px;}
+  .refs .label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--ink-faint);margin:0 0 10px;
+  }
+  .ref-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .ref-card{
+    display:block;
+    border:0.5px solid var(--line);
+    border-radius:10px;
+    padding:14px 14px 16px;
+    text-decoration:none;
+    background:var(--paper);
+    transition:border-color 0.15s ease;
+  }
+  .ref-card:hover{border-color:var(--line-strong);}
+  .ref-card .ref-icon{
+    width:26px;height:26px;border-radius:50%;
+    background:var(--rose-tint);color:var(--rose-dark);
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-family:'Fraunces', serif;font-weight:500;
+    margin-bottom:10px;
+  }
+  .ref-card p{margin:0;font-size:13px;color:var(--ink);font-weight:500;}
+  .ref-card span{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-faint);}
+
+  /* ---------- critique ---------- */
+  .critique{
+    border-top:0.5px dashed var(--line-strong);
+    padding-top:22px;
+  }
+  .critique .label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--ink-faint);margin:0 0 6px;
+  }
+  .critique .critique-sub{font-size:13.5px;color:var(--ink-soft);margin:0 0 14px;}
+  .critique-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .critique-file-label{
+    display:inline-flex;align-items:center;gap:8px;
+    border:0.5px solid var(--line-strong);
+    border-radius:8px;padding:9px 14px;
+    font-size:13.5px;color:var(--ink);cursor:pointer;
+    background:var(--paper);
+  }
+  .critique-file-label:hover{border-color:var(--ink-faint);}
+  .critique input[type=file]{display:none;}
+  .critique-filename{font-size:12.5px;color:var(--ink-faint);}
+  .critique-btn{
+    border:0.5px solid var(--prussian-dark);
+    background:var(--prussian-dark);
+    color:var(--panel);
+    border-radius:8px;
+    padding:9px 16px;
+    font-size:13.5px;
+    font-family:'Work Sans', sans-serif;
+    cursor:pointer;
+  }
+  .critique-btn:disabled{
+    background:transparent;color:var(--ink-faint);
+    border-color:var(--line-strong);cursor:not-allowed;
+  }
+  .critique-preview{
+    display:none;max-width:220px;border-radius:8px;
+    margin-top:14px;border:0.5px solid var(--line);
+  }
+  .critique-result{
+    display:none;
+    margin-top:16px;
+    background:var(--paper-2);
+    border-radius:10px;
+    padding:16px 18px;
+    font-size:14px;
+    color:var(--ink);
+    white-space:pre-wrap;
+  }
+  .critique-result.loading{color:var(--ink-faint);font-style:italic;}
+  .critique-result.error{color:var(--rose-dark);}
+
+  /* ---------- footer ---------- */
+  footer{border-top:0.5px solid var(--line);padding:52px 0 64px;}
+  footer .foot-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start;}
+  footer h3{font-family:'Fraunces', serif;font-style:italic;font-weight:500;font-size:20px;margin:0 0 10px;}
+  footer p{font-size:14px;color:var(--ink-soft);max-width:420px;margin:0;}
+  footer .foot-note{font-size:12.5px;color:var(--ink-faint);font-family:'JetBrains Mono', monospace;}
+
+  @media (max-width:720px){
+    .how-grid{grid-template-columns:1fr;gap:26px;}
+    .swatches{grid-template-columns:repeat(2,1fr);}
+    .week{grid-template-columns:44px 1fr;gap:14px;}
+    .blob{width:44px;height:42px;font-size:15px;}
+    .timeline::before{left:21px;}
+    .hero{padding:72px 0 60px;}
+    footer .foot-grid{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="wordmark" href="#top">mi<span>zu</span></a>
+    <div class="nav-links">
+      <a href="#palette">Palette</a>
+      <a href="#plan">The 8 weeks</a>
+    </div>
+  </div>
+</nav>
+
+<div id="top" class="hero">
+  <div class="bloom bloom-a"></div>
+  <div class="bloom bloom-b"></div>
+  <div class="bloom bloom-c"></div>
+  <div class="wrap hero-inner">
+    <p class="eyebrow">A beginner's watercolour practice</p>
+    <h1 class="title">Mizu</h1>
+    <p class="lede">Eight weeks, one skill at a time. Every week pairs a short lesson with a highly-rated video, so you spend your time painting instead of hunting for what to learn next.</p>
+    <div class="hero-meta">
+      <span><strong>8</strong> weeks</span>
+      <span><strong>1</strong> new skill each week</span>
+      <span><strong>1</strong> curated video per week</span>
+      <span><strong>20–40 min</strong> a session</span>
+    </div>
+  </div>
+</div>
+
+<section class="how">
+  <div class="wrap">
+    <h2 class="section-title">How this works</h2>
+    <p class="section-sub">Mizu isn't a full course — it's a weekly nudge. Read the focus, watch the video, then paint the practice prompt on scrap paper before you worry about a finished piece.</p>
+    <div class="how-grid">
+      <div class="how-item">
+        <p class="how-num">01</p>
+        <h3>One skill, all week</h3>
+        <p>Each week isolates a single technique. Repeating it on scrap paper matters more than any single "good" painting.</p>
+      </div>
+      <div class="how-item">
+        <p class="how-num">02</p>
+        <h3>Follow the bloom</h3>
+        <p>Watercolour behaves on its own terms. Watch what the paint does before trying to control it — that's most of the skill.</p>
+      </div>
+      <div class="how-item">
+        <p class="how-num">03</p>
+        <h3>Keep a sampler sheet</h3>
+        <p>Save every practice swatch on one sheet of paper. By week 8 it becomes a reference chart of everything you've learned.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="palette" id="palette">
+  <div class="wrap">
+    <h2 class="section-title">A starter palette</h2>
+    <p class="section-sub">You don't need more than this to follow the plan. Five pigments, one round brush, cold-press paper, and two water jars — one for rinsing, one for clean mixing.</p>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="swatch-chip" style="background:var(--prussian-dark)"></div>
+        <h4>Prussian blue</h4>
+        <p>cool primary</p>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#B23A2E"></div>
+        <h4>Pyrrol red</h4>
+        <p>warm primary</p>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#D8A62A"></div>
+        <h4>Hansa yellow</h4>
+        <p>warm primary</p>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip" style="background:var(--sienna-dark)"></div>
+        <h4>Burnt sienna</h4>
+        <p>earth tone</p>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip" style="background:var(--ink)"></div>
+        <h4>Payne's grey</h4>
+        <p>for value studies</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="plan" id="plan">
+  <div class="wrap">
+    <h2 class="section-title">The 8-week plan</h2>
+    <p class="section-sub">Work through them in order — each week leans on the one before it. If a week feels shaky, stay another week before moving on.</p>
+
+    <div class="timeline">
+
+      <div class="week">
+        <div class="blob c-sage">1</div>
+        <div class="week-card">
+          <p class="week-eyebrow t-sage">Week 1 — Foundations</p>
+          <h3>Brush control &amp; water-to-pigment ratio</h3>
+          <p class="desc">Before technique, get comfortable with your tools. This week is about how much water is too much, how a brush behaves fully loaded versus nearly dry, and what your particular paper and paint can do.</p>
+          <div class="practice">
+            <p class="label">This week's practice</p>
+            <p>Fill a page with strokes at four water levels — dry, damp, wet, and dripping — and label each one.</p>
+          </div>
+          <div class="video-frame" data-embed-src="https://www.youtube-nocookie.com/embed/tP8Z-n0ppBM" data-title="9 Minute Watercolor Tutorial for Absolute Beginners">
+            <div class="video-thumb" style="background-image:url('https://img.youtube.com/vi/tP8Z-n0ppBM/hqdefault.jpg');">
+              <div class="video-play"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+          </div>
+          <p class="video-credit">"9 Minute Watercolor Tutorial for Absolute Beginners" — <a href="https://www.youtube.com/watch?v=tP8Z-n0ppBM" target="_blank" rel="noopener">watch on YouTube</a></p>
+
+          <div class="refs">
+            <p class="label">Pinterest references for this skill</p>
+            <div class="ref-grid">
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20brush%20stroke%20practice%20sheet" target="_blank" rel="noopener">
+                <span class="ref-icon">1</span>
+                <p>Brush stroke practice sheets</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20dry%20brush%20texture" target="_blank" rel="noopener">
+                <span class="ref-icon">2</span>
+                <p>Dry brush texture studies</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20beginner%20exercises" target="_blank" rel="noopener">
+                <span class="ref-icon">3</span>
+                <p>Beginner water-control exercises</p>
+                <span>Search on Pinterest</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="critique" data-skill="brush control and water-to-pigment ratio (varying dry, damp, wet and dripping strokes)">
+            <p class="label">Get feedback on your practice</p>
+            <p class="critique-sub">Upload a photo of this week's practice sheet for a quick critique.</p>
+            <div class="critique-row">
+              <label class="critique-file-label">
+                Choose photo
+                <input type="file" accept="image/*" class="critique-file">
+              </label>
+              <span class="critique-filename"></span>
+              <button class="critique-btn" disabled>Get feedback</button>
+            </div>
+            <img class="critique-preview">
+            <div class="critique-result"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week">
+        <div class="blob c-prussian">2</div>
+        <div class="week-card">
+          <p class="week-eyebrow t-prussian">Week 2 — Wash control</p>
+          <h3>Flat, graded &amp; variegated washes</h3>
+          <p class="desc">A wash is watercolour's basic unit — a smooth, even layer of colour across a shape. This week covers the three core washes and the water-control habits (like maintaining the "bead") that keep them from streaking.</p>
+          <div class="practice">
+            <p class="label">This week's practice</p>
+            <p>Paint a sampler sheet: one flat wash, one graded wash from dark to light, one variegated wash blending two colours.</p>
+          </div>
+          <div class="video-frame" data-embed-src="https://www.youtube-nocookie.com/embed/fWYJcNzRWXE" data-title="3 Watercolor Washes Every Beginner Needs to Know">
+            <div class="video-thumb" style="background-image:url('https://img.youtube.com/vi/fWYJcNzRWXE/hqdefault.jpg');">
+              <div class="video-play"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+          </div>
+          <p class="video-credit">"3 Watercolor Washes Every Beginner Needs to Know" — <a href="https://www.youtube.com/watch?v=fWYJcNzRWXE" target="_blank" rel="noopener">watch on YouTube</a></p>
+
+          <div class="refs">
+            <p class="label">Pinterest references for this skill</p>
+            <div class="ref-grid">
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20flat%20wash%20sky" target="_blank" rel="noopener">
+                <span class="ref-icon">1</span>
+                <p>Flat wash skies</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20graded%20wash%20sunset" target="_blank" rel="noopener">
+                <span class="ref-icon">2</span>
+                <p>Graded wash sunsets</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20variegated%20wash%20abstract" target="_blank" rel="noopener">
+                <span class="ref-icon">3</span>
+                <p>Variegated wash abstracts</p>
+                <span>Search on Pinterest</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="critique" data-skill="flat, graded and variegated washes">
+            <p class="label">Get feedback on your practice</p>
+            <p class="critique-sub">Upload a photo of your wash sampler sheet for a quick critique.</p>
+            <div class="critique-row">
+              <label class="critique-file-label">
+                Choose photo
+                <input type="file" accept="image/*" class="critique-file">
+              </label>
+              <span class="critique-filename"></span>
+              <button class="critique-btn" disabled>Get feedback</button>
+            </div>
+            <img class="critique-preview">
+            <div class="critique-result"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week">
+        <div class="blob c-prussian">3</div>
+        <div class="week-card">
+          <p class="week-eyebrow t-prussian">Week 3 — Wash control</p>
+          <h3>Wet-on-wet</h3>
+          <p class="desc">Painting onto paper that's already damp lets colour spread and bloom on its own — it's the technique behind watercolour's signature soft edges and is where most of the medium's "magic" comes from.</p>
+          <div class="practice">
+            <p class="label">This week's practice</p>
+            <p>Wet a circle of paper with clean water, then drop in two or three colours and watch how they merge without touching them.</p>
+          </div>
+          <div class="video-frame" data-embed-src="https://www.youtube-nocookie.com/embed/r5mLY9xNcpM" data-title="Wet on Wet Watercolour for Beginners">
+            <div class="video-thumb" style="background-image:url('https://img.youtube.com/vi/r5mLY9xNcpM/hqdefault.jpg');">
+              <div class="video-play"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+          </div>
+          <p class="video-credit">"Wet on Wet Watercolour for Beginners | Easy First Technique" — <a href="https://www.youtube.com/watch?v=r5mLY9xNcpM" target="_blank" rel="noopener">watch on YouTube</a></p>
+
+          <div class="refs">
+            <p class="label">Pinterest references for this skill</p>
+            <div class="ref-grid">
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20wet%20on%20wet%20bloom" target="_blank" rel="noopener">
+                <span class="ref-icon">1</span>
+                <p>Wet-on-wet colour blooms</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20wet%20on%20wet%20sky%20clouds" target="_blank" rel="noopener">
+                <span class="ref-icon">2</span>
+                <p>Soft wet-on-wet cloudy skies</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20wet%20on%20wet%20flowers" target="_blank" rel="noopener">
+                <span class="ref-icon">3</span>
+                <p>Wet-on-wet florals</p>
+                <span>Search on Pinterest</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="critique" data-skill="wet-on-wet technique (painting onto damp paper so colour spreads and blooms)">
+            <p class="label">Get feedback on your practice</p>
+            <p class="critique-sub">Upload a photo of your wet-on-wet bloom studies for a quick critique.</p>
+            <div class="critique-row">
+              <label class="critique-file-label">
+                Choose photo
+                <input type="file" accept="image/*" class="critique-file">
+              </label>
+              <span class="critique-filename"></span>
+              <button class="critique-btn" disabled>Get feedback</button>
+            </div>
+            <img class="critique-preview">
+            <div class="critique-result"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week">
+        <div class="blob c-prussian">4</div>
+        <div class="week-card">
+          <p class="week-eyebrow t-prussian">Week 4 — Wash control</p>
+          <h3>Wet-on-dry &amp; layering</h3>
+          <p class="desc">The opposite approach: painting onto dry paper for crisp, controlled edges, then glazing more dry layers on top once each one has fully dried to build up depth without muddying colour.</p>
+          <div class="practice">
+            <p class="label">This week's practice</p>
+            <p>Paint three overlapping circles in the same colour, letting each one dry completely before adding the next.</p>
+          </div>
+          <div class="video-frame" data-embed-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLbPyMFEGAQYoynei_YgcQWmlfDX1i5DGr" data-title="Watercolor Basics: Wet on Dry Technique">
+            <div class="video-thumb" style="background:linear-gradient(135deg, var(--sienna-dark), var(--rose-dark));">
+              <div class="video-play"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+          </div>
+          <p class="video-credit">"Watercolor Basics: Wet on Dry Technique" — <a href="https://www.youtube.com/playlist?list=PLbPyMFEGAQYoynei_YgcQWmlfDX1i5DGr" target="_blank" rel="noopener">watch on YouTube</a></p>
+
+          <div class="refs">
+            <p class="label">Pinterest references for this skill</p>
+            <div class="ref-grid">
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20glazing%20layers%20fruit" target="_blank" rel="noopener">
+                <span class="ref-icon">1</span>
+                <p>Glazed, layered fruit studies</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20layered%20leaves" target="_blank" rel="noopener">
+                <span class="ref-icon">2</span>
+                <p>Layered leaf paintings</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20wet%20on%20dry%20botanical" target="_blank" rel="noopener">
+                <span class="ref-icon">3</span>
+                <p>Crisp-edged botanical studies</p>
+                <span>Search on Pinterest</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="critique" data-skill="wet-on-dry technique and glazing (layering dried washes for depth)">
+            <p class="label">Get feedback on your practice</p>
+            <p class="critique-sub">Upload a photo of your layered circles or glazing practice for a quick critique.</p>
+            <div class="critique-row">
+              <label class="critique-file-label">
+                Choose photo
+                <input type="file" accept="image/*" class="critique-file">
+              </label>
+              <span class="critique-filename"></span>
+              <button class="critique-btn" disabled>Get feedback</button>
+            </div>
+            <img class="critique-preview">
+            <div class="critique-result"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week">
+        <div class="blob c-sienna">5</div>
+        <div class="week-card">
+          <p class="week-eyebrow t-sienna">Week 5 — Colour</p>
+          <h3>Colour mixing &amp; the colour wheel</h3>
+          <p class="desc">With water control in hand, turn to colour. Learn to mix the full rainbow from just three primaries, and start noticing which of your pigments run warm or cool.</p>
+          <div class="practice">
+            <p class="label">This week's practice</p>
+            <p>Build a 12-step colour wheel using only your red, yellow and blue.</p>
+          </div>
+          <div class="video-frame" data-embed-src="https://www.youtube-nocookie.com/embed/FI2OYh9cn3Q" data-title="Color mixing lesson for beginners - the Watercolor Color Wheel">
+            <div class="video-thumb" style="background-image:url('https://img.youtube.com/vi/FI2OYh9cn3Q/hqdefault.jpg');">
+              <div class="video-play"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+          </div>
+          <p class="video-credit">"Color mixing lesson for beginners — the Watercolor Color Wheel" — <a href="https://www.youtube.com/watch?v=FI2OYh9cn3Q" target="_blank" rel="noopener">watch on YouTube</a></p>
+
+          <div class="refs">
+            <p class="label">Pinterest references for this skill</p>
+            <div class="ref-grid">
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20color%20wheel%20chart" target="_blank" rel="noopener">
+                <span class="ref-icon">1</span>
+                <p>Hand-painted colour wheels</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20color%20mixing%20swatches" target="_blank" rel="noopener">
+                <span class="ref-icon">2</span>
+                <p>Colour mixing swatch charts</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20limited%20palette%20painting" target="_blank" rel="noopener">
+                <span class="ref-icon">3</span>
+                <p>Limited-palette paintings</p>
+                <span>Search on Pinterest</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="critique" data-skill="colour mixing from a limited primary palette">
+            <p class="label">Get feedback on your practice</p>
+            <p class="critique-sub">Upload a photo of your colour wheel or mixing chart for a quick critique.</p>
+            <div class="critique-row">
+              <label class="critique-file-label">
+                Choose photo
+                <input type="file" accept="image/*" class="critique-file">
+              </label>
+              <span class="critique-filename"></span>
+              <button class="critique-btn" disabled>Get feedback</button>
+            </div>
+            <img class="critique-preview">
+            <div class="critique-result"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week">
+        <div class="blob c-rose">6</div>
+        <div class="week-card">
+          <p class="week-eyebrow t-rose">Week 6 — Texture</p>
+          <h3>Texture &amp; special effects</h3>
+          <p class="desc">Salt, splatter, and lifting turn a flat wash into something with grain and surprise. These effects are unpredictable by nature, so this week is about experimenting freely rather than aiming for a specific result.</p>
+          <div class="practice">
+            <p class="label">This week's practice</p>
+            <p>Paint three washes at different wetness levels and sprinkle salt on each while still damp — compare the results once dry.</p>
+          </div>
+          <div class="video-frame" data-embed-src="https://www.youtube-nocookie.com/embed/MwyQTPyGt_E" data-title="How to Create Texture in Watercolor With Salt">
+            <div class="video-thumb" style="background-image:url('https://img.youtube.com/vi/MwyQTPyGt_E/hqdefault.jpg');">
+              <div class="video-play"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+          </div>
+          <p class="video-credit">"How to Create Texture in Watercolor With Salt" (Angela Fehr) — <a href="https://www.youtube.com/watch?v=MwyQTPyGt_E" target="_blank" rel="noopener">watch on YouTube</a></p>
+
+          <div class="refs">
+            <p class="label">Pinterest references for this skill</p>
+            <div class="ref-grid">
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20salt%20texture" target="_blank" rel="noopener">
+                <span class="ref-icon">1</span>
+                <p>Salt-texture studies</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20splatter%20texture" target="_blank" rel="noopener">
+                <span class="ref-icon">2</span>
+                <p>Splatter and spatter effects</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20lifting%20technique" target="_blank" rel="noopener">
+                <span class="ref-icon">3</span>
+                <p>Lifted-out highlights</p>
+                <span>Search on Pinterest</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="critique" data-skill="texture techniques such as salt, splatter and lifting">
+            <p class="label">Get feedback on your practice</p>
+            <p class="critique-sub">Upload a photo of your texture experiments for a quick critique.</p>
+            <div class="critique-row">
+              <label class="critique-file-label">
+                Choose photo
+                <input type="file" accept="image/*" class="critique-file">
+              </label>
+              <span class="critique-filename"></span>
+              <button class="critique-btn" disabled>Get feedback</button>
+            </div>
+            <img class="critique-preview">
+            <div class="critique-result"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week">
+        <div class="blob c-ink">7</div>
+        <div class="week-card">
+          <p class="week-eyebrow t-ink">Week 7 — Light</p>
+          <h3>Value, light &amp; shadow</h3>
+          <p class="desc">Value — how light or dark something is — does more to describe form than colour does. Working in a single pigment this week removes the distraction of colour so you can focus purely on tone.</p>
+          <div class="practice">
+            <p class="label">This week's practice</p>
+            <p>Paint a five-step value scale in one colour, then use it to shade a simple sphere with a clear light source.</p>
+          </div>
+          <div class="video-frame" data-embed-src="https://www.youtube-nocookie.com/embed/8K9ZouAKLwg" data-title="Finding light and shadow with value studies in watercolor">
+            <div class="video-thumb" style="background-image:url('https://img.youtube.com/vi/8K9ZouAKLwg/hqdefault.jpg');">
+              <div class="video-play"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+          </div>
+          <p class="video-credit">"Finding light and shadow with value studies in watercolor" — <a href="https://www.youtube.com/watch?v=8K9ZouAKLwg" target="_blank" rel="noopener">watch on YouTube</a></p>
+
+          <div class="refs">
+            <p class="label">Pinterest references for this skill</p>
+            <div class="ref-grid">
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20value%20scale" target="_blank" rel="noopener">
+                <span class="ref-icon">1</span>
+                <p>Value scale charts</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20light%20and%20shadow%20sphere" target="_blank" rel="noopener">
+                <span class="ref-icon">2</span>
+                <p>Shaded sphere studies</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=watercolor%20tonal%20painting%20monochrome" target="_blank" rel="noopener">
+                <span class="ref-icon">3</span>
+                <p>Monochrome tonal paintings</p>
+                <span>Search on Pinterest</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="critique" data-skill="value studies — using tone in a single colour to show light and shadow">
+            <p class="label">Get feedback on your practice</p>
+            <p class="critique-sub">Upload a photo of your value scale or shaded sphere for a quick critique.</p>
+            <div class="critique-row">
+              <label class="critique-file-label">
+                Choose photo
+                <input type="file" accept="image/*" class="critique-file">
+              </label>
+              <span class="critique-filename"></span>
+              <button class="critique-btn" disabled>Get feedback</button>
+            </div>
+            <img class="critique-preview">
+            <div class="critique-result"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week">
+        <div class="blob c-final">8</div>
+        <div class="week-card">
+          <p class="week-eyebrow t-rose">Week 8 — Putting it together</p>
+          <h3>A loose floral, start to finish</h3>
+          <p class="desc">Everything so far — washes, wet-on-wet, mixed colour, value — comes together in one small, forgiving subject. Loose florals don't need a pencil sketch or precise petals, which makes them a kind first "real" painting.</p>
+          <div class="practice">
+            <p class="label">This week's practice</p>
+            <p>Paint a small bouquet in one sitting, no pencil first — let the brush decide the petal shapes as you go.</p>
+          </div>
+          <div class="video-frame" data-embed-src="https://www.youtube-nocookie.com/embed/SYIpITMGqk8" data-title="How to Paint Loose Watercolor Flowers for Beginners">
+            <div class="video-thumb" style="background-image:url('https://img.youtube.com/vi/SYIpITMGqk8/hqdefault.jpg');">
+              <div class="video-play"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+          </div>
+          <p class="video-credit">"How to Paint Loose Watercolor Flowers for Beginners" — <a href="https://www.youtube.com/watch?v=SYIpITMGqk8" target="_blank" rel="noopener">watch on YouTube</a></p>
+
+          <div class="refs">
+            <p class="label">Pinterest references for this skill</p>
+            <div class="ref-grid">
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=loose%20watercolor%20flowers" target="_blank" rel="noopener">
+                <span class="ref-icon">1</span>
+                <p>Loose watercolour flowers</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=loose%20watercolor%20bouquet" target="_blank" rel="noopener">
+                <span class="ref-icon">2</span>
+                <p>Loose watercolour bouquets</p>
+                <span>Search on Pinterest</span>
+              </a>
+              <a class="ref-card" href="https://www.pinterest.com/search/pins/?q=loose%20floral%20watercolor%20painting" target="_blank" rel="noopener">
+                <span class="ref-icon">3</span>
+                <p>Loose floral compositions</p>
+                <span>Search on Pinterest</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="critique" data-skill="a full loose floral painting combining washes, wet-on-wet, colour mixing and value">
+            <p class="label">Get feedback on your practice</p>
+            <p class="critique-sub">Upload a photo of your finished floral for a quick critique.</p>
+            <div class="critique-row">
+              <label class="critique-file-label">
+                Choose photo
+                <input type="file" accept="image/*" class="critique-file">
+              </label>
+              <span class="critique-filename"></span>
+              <button class="critique-btn" disabled>Get feedback</button>
+            </div>
+            <img class="critique-preview">
+            <div class="critique-result"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <h3>mizu</h3>
+      <p>Water finds its own shape. Give the paint room to do what it does, and the control comes with practice — not the other way around.</p>
+    </div>
+    <p class="foot-note">Videos are linked from their original YouTube creators.<br>Materials suggested, not required.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.querySelectorAll('.video-frame').forEach(function(frame){
+    frame.addEventListener('click', function(){
+      if (frame.classList.contains('playing')) return;
+      var src = frame.getAttribute('data-embed-src');
+      var title = frame.getAttribute('data-title') || 'YouTube video';
+      var sep = src.indexOf('?') > -1 ? '&' : '?';
+      var iframe = document.createElement('iframe');
+      iframe.src = src + sep + 'autoplay=1&rel=0';
+      iframe.title = title;
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.allowFullscreen = true;
+      iframe.setAttribute('allowfullscreen', '');
+      frame.appendChild(iframe);
+      frame.classList.add('playing');
+    });
+  });
+})();
+
+(function(){
+  function fileToBase64(file){
+    return new Promise(function(resolve, reject){
+      var reader = new FileReader();
+      reader.onload = function(){ resolve(reader.result.split(',')[1]); };
+      reader.onerror = function(){ reject(new Error('Could not read file')); };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  document.querySelectorAll('.critique').forEach(function(box){
+    var skill = box.getAttribute('data-skill');
+    var fileInput = box.querySelector('.critique-file');
+    var filenameEl = box.querySelector('.critique-filename');
+    var btn = box.querySelector('.critique-btn');
+    var preview = box.querySelector('.critique-preview');
+    var result = box.querySelector('.critique-result');
+    var currentFile = null;
+
+    fileInput.addEventListener('change', function(){
+      var file = fileInput.files && fileInput.files[0];
+      if (!file) return;
+      currentFile = file;
+      filenameEl.textContent = file.name;
+      btn.disabled = false;
+      result.style.display = 'none';
+      result.className = 'critique-result';
+      var url = URL.createObjectURL(file);
+      preview.src = url;
+      preview.style.display = 'block';
+    });
+
+    btn.addEventListener('click', function(){
+      if (!currentFile) return;
+      btn.disabled = true;
+      btn.textContent = 'Looking...';
+      result.style.display = 'block';
+      result.className = 'critique-result loading';
+      result.textContent = 'Looking at your painting...';
+
+      fileToBase64(currentFile).then(function(base64){
+        var mediaType = currentFile.type || 'image/jpeg';
+        return fetch('/.netlify/functions/critique', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: base64, mediaType: mediaType, skill: skill })
+        });
+      }).then(function(response){
+        if (!response.ok) throw new Error('Request failed with status ' + response.status);
+        return response.json();
+      }).then(function(data){
+        result.className = 'critique-result';
+        result.textContent = data.text || data.error || 'No feedback came back — try again in a moment.';
+      }).catch(function(err){
+        result.className = 'critique-result error';
+        result.textContent = 'Could not get feedback right now (' + err.message + '). Try again in a moment.';
+      }).finally(function(){
+        btn.disabled = false;
+        btn.textContent = 'Get feedback';
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
